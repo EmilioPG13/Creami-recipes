@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roland's Creami Recipes</title>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Fredoka', 'sans-serif'],
+                    },
+                    colors: {
+                        'creami-pink': '#FFC6D9',
+                        'creami-blue': '#BAE1FF',
+                        'creami-mint': '#B5EAD7',
+                        'creami-yellow': '#FFF5BA',
+                        'creami-dark': '#2D3748',
+                        'creami-gray': '#F7FAFC',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-creami-gray text-creami-dark font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="app.navigate('home')">
+                    <span class="font-heading text-2xl font-bold text-creami-dark">
+                        🍦 Roland<span class="text-pink-400">Cooks</span>
+                    </span>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-8">
+                    <button onclick="app.navigate('home')"
+                        class="text-gray-600 hover:text-pink-500 px-3 py-2 rounded-md text-sm font-medium transition-colors font-heading">Home</button>
+                    <button onclick="app.navigate('scoop')"
+                        class="text-gray-600 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors font-heading">Scoop
+                        Mode</button>
+                    <button onclick="app.navigate('soft-serve')"
+                        class="text-gray-600 hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium transition-colors font-heading">Soft
+                        Serve</button>
+                    <button onclick="app.navigate('shopping')"
+                        class="text-gray-600 hover:text-yellow-500 px-3 py-2 rounded-md text-sm font-medium transition-colors font-heading">Shopping
+                        List</button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center md:hidden">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+                        class="text-gray-500 hover:text-gray-700 focus:outline-none p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="app.navigate('home'); document.getElementById('mobile-menu').classList.add('hidden')"
+                    class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-pink-500 font-heading">Home</button>
+                <button onclick="app.navigate('scoop'); document.getElementById('mobile-menu').classList.add('hidden')"
+                    class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-400 font-heading">Scoop
+                    Mode</button>
+                <button
+                    onclick="app.navigate('soft-serve'); document.getElementById('mobile-menu').classList.add('hidden')"
+                    class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-purple-400 font-heading">Soft
+                    Serve</button>
+                <button
+                    onclick="app.navigate('shopping'); document.getElementById('mobile-menu').classList.add('hidden')"
+                    class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-yellow-500 font-heading">Shopping
+                    List</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <!-- Content injected by app.js -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-400 text-sm">
+                © 2025 Roland's Creami Recipes. Built for the Ninja Creami NC701.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Recipe Modal -->
+    <div id="recipe-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"
+                onclick="app.closeModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div
+                class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                <div id="modal-content">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEMPLATES -->
+
+    <!-- Home Template -->
+    <template id="template-home">
+        <div class="text-center py-12 fade-in">
+            <h1 class="font-heading text-4xl md:text-5xl font-bold text-creami-dark mb-4">
+                Welcome to the <span class="text-pink-400">Swirl Station</span>
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+                Your personal collection of delicious Ninja Creami recipes.
+                Choose a mode to get started!
+            </p>
+
+            <div class="flex justify-center gap-4 mb-12">
+                <button data-action="nav-scoop"
+                    class="bg-white border-2 border-blue-200 hover:border-blue-400 text-blue-500 font-heading font-bold py-3 px-8 rounded-full shadow-sm hover:shadow-md transition-all transform hover:-translate-y-1">
+                    🥄 Scoop Mode
+                </button>
+                <button data-action="nav-soft-serve"
+                    class="bg-white border-2 border-purple-200 hover:border-purple-400 text-purple-500 font-heading font-bold py-3 px-8 rounded-full shadow-sm hover:shadow-md transition-all transform hover:-translate-y-1">
+                    🍦 Soft Serve
+                </button>
+            </div>
+
+            <div class="mt-16 text-left">
+                <h2 class="font-heading text-2xl font-bold text-gray-700 mb-6 border-b pb-2">Latest Creations</h2>
+                <div id="home-recipe-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Recipes injected here -->
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Mode Layout Template -->
+    <template id="template-mode-layout">
+        <div class="fade-in">
+            <div class="text-center mb-10">
+                <h2 id="mode-title" class="font-heading text-3xl font-bold text-creami-dark mb-2"></h2>
+                <p id="mode-subtitle" class="text-gray-500"></p>
+            </div>
+
+            <!-- Sub Navigation -->
+            <div id="sub-nav-container" class="flex flex-wrap justify-center gap-2 mb-10">
+                <!-- Sub nav items injected here -->
+            </div>
+
+            <!-- Recipe Grid -->
+            <div id="mode-recipe-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Recipes injected here -->
+            </div>
+
+            <!-- Empty State (Hidden by default) -->
+            <div id="mode-empty-state"
+                class="hidden text-center py-12 bg-white rounded-3xl border-2 border-dashed border-gray-200">
+                <p class="text-gray-400 text-lg">No recipes found for this program yet!</p>
+                <button class="mt-4 text-pink-500 font-bold hover:underline">Add your first one?</button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Recipe Card Template -->
+    <template id="template-recipe-card">
+        <div
+            class="recipe-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group cursor-pointer border border-gray-100">
+            <div class="relative h-48 overflow-hidden">
+                <img class="card-image w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    src="" alt="">
+                <div
+                    class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-bold text-gray-600 shadow-sm">
+                    <span class="card-calories"></span> cal
+                </div>
+            </div>
+            <div class="p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <h3
+                        class="card-title font-heading text-xl font-bold text-gray-800 leading-tight group-hover:text-pink-500 transition-colors">
+                    </h3>
+                </div>
+
+                <div class="card-tags flex flex-wrap gap-2 mb-4">
+                    <!-- Tags injected here -->
+                </div>
+
+                <div class="flex justify-between items-center text-sm text-gray-500 border-t pt-3">
+                    <span class="flex items-center">
+                        <span class="card-protein font-bold text-gray-700 mr-1"></span> Protein
+                    </span>
+                    <span class="text-pink-400 font-bold group-hover:translate-x-1 transition-transform">View Recipe
+                        →</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Modal Content Template -->
+    <template id="template-modal-content">
+        <div class="relative">
+            <!-- Close Button -->
+            <button id="modal-close-btn"
+                class="absolute top-4 right-4 z-10 bg-white/80 hover:bg-white p-2 rounded-full text-gray-500 hover:text-gray-800 transition-colors backdrop-blur-sm">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+
+            <!-- Hero Image -->
+            <div class="h-64 sm:h-80 w-full relative">
+                <img id="modal-image" src="" alt="" class="w-full h-full object-cover">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 sm:p-8">
+                    <h2 id="modal-title" class="font-heading text-3xl sm:text-4xl font-bold text-white mb-2"></h2>
+                    <div class="flex gap-3 text-white/90 text-sm font-medium">
+                        <span id="modal-calories" class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full"></span>
+                        <span id="modal-protein" class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Ingredients -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <span class="bg-pink-100 text-pink-500 p-1 rounded-lg mr-2">📝</span> Ingredients
+                        </h3>
+                        <ul id="modal-ingredients" class="space-y-3">
+                            <!-- Ingredients injected here -->
+                        </ul>
+
+                        <button id="modal-add-shopping"
+                            class="mt-6 w-full bg-yellow-100 hover:bg-yellow-200 text-yellow-700 font-bold py-2 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Add to Shopping List
+                        </button>
+                    </div>
+
+                    <!-- Instructions -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <span class="bg-blue-100 text-blue-500 p-1 rounded-lg mr-2">⚙️</span> Instructions
+                        </h3>
+                        <ol id="modal-instructions" class="space-y-4">
+                            <!-- Instructions injected here -->
+                        </ol>
+
+                        <div class="mt-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <p class="text-sm text-gray-500 font-medium mb-1">Machine Settings:</p>
+                            <div class="flex gap-2">
+                                <span id="modal-mode-badge"
+                                    class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm font-bold capitalize"></span>
+                                <span id="modal-program-badge"
+                                    class="bg-gray-800 text-white px-3 py-1 rounded-md text-sm font-bold capitalize"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Shopping List Template -->
+    <template id="template-shopping-list">
+        <div class="max-w-2xl mx-auto fade-in">
+            <div class="text-center mb-8">
+                <h2 class="font-heading text-3xl font-bold text-creami-dark mb-2">Shopping List</h2>
+                <p class="text-gray-500">Get everything you need for your next spin.</p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 sm:p-8">
+                    <div id="shopping-list-empty" class="hidden text-center py-8 text-gray-400">
+                        <p>Your list is empty!</p>
+                        <button data-action="nav-home" class="mt-2 text-pink-500 font-bold hover:underline">Browse
+                            recipes</button>
+                    </div>
+
+                    <div id="shopping-list-content" class="hidden">
+                        <ul id="shopping-list-items" class="space-y-3">
+                            <!-- Items injected here -->
+                        </ul>
+
+                        <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                            <button id="clear-list-btn"
+                                class="text-red-400 hover:text-red-600 text-sm font-bold px-4 py-2 rounded-lg hover:bg-red-50 transition-colors">
+                                Clear List
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,338 @@
+{
+  "recipes": [
+    {
+      "id": "vanilla-bean",
+      "title": "Daily Driver Vanilla",
+      "program": "lite-ice-cream",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/FFF5BA/5D4037?text=Vanilla+Bean",
+      "calories": 250,
+      "protein": "26g",
+      "fat": "4.5g",
+      "ingredients": [
+        "1.5 cups Fairlife Vanilla Shake",
+        "1 tbsp SF Vanilla Pudding",
+        "1/4 tsp Vanilla Bean Paste"
+      ],
+      "instructions": [
+        "Combine all ingredients in the Creami pint.",
+        "Froth or mix until fully dissolved.",
+        "Freeze for 24 hours.",
+        "Process on 'Lite Ice Cream' mode.",
+        "If crumbly, add a splash of milk and Re-Spin."
+      ],
+      "tags": ["High Protein", "Low Calorie"]
+    },
+    {
+      "id": "double-choc",
+      "title": "Decadent Double Choc",
+      "program": "lite-ice-cream",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/5D4037/ffffff?text=Double+Choc",
+      "calories": 310,
+      "protein": "30g",
+      "fat": "9g",
+      "ingredients": [
+        "1.5 cups Fairlife Choc Milk",
+        "1 tbsp SF Chocolate Pudding",
+        "1 tbsp Cocoa Powder",
+        "Mix-in: 1 tbsp Mini Chips"
+      ],
+      "instructions": [
+        "Mix milk, pudding mix, and cocoa powder in pint.",
+        "Freeze for 24 hours.",
+        "Process on 'Lite Ice Cream' mode.",
+        "Create a well in the center, add mini chips.",
+        "Select 'Mix-In' setting."
+      ],
+      "tags": ["High Protein", "Chocolate"]
+    },
+    {
+      "id": "cookies-cream",
+      "title": "Cookies & Cream",
+      "program": "lite-ice-cream",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/e0e0e0/5D4037?text=Cookies+n+Cream",
+      "calories": 340,
+      "protein": "20g",
+      "fat": "10g",
+      "ingredients": [
+        "1.5 cups Fairlife Vanilla",
+        "1 tbsp SF White Choc Pudding",
+        "Mix-in: 3 Oreo Thins"
+      ],
+      "instructions": [
+        "Mix milk and pudding powder.",
+        "Freeze for 24 hours.",
+        "Process on 'Lite Ice Cream'.",
+        "Add Oreos and select 'Mix-In'."
+      ],
+      "tags": ["Classic", "Mix-in"]
+    },
+    {
+      "id": "mint-chip",
+      "title": "Mint Chocolate Chip",
+      "program": "ice-cream",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/B5EAD7/5D4037?text=Mint+Chip",
+      "calories": 290,
+      "protein": "19g",
+      "fat": "10g",
+      "ingredients": [
+        "1.5 cups Fairlife Vanilla",
+        "1/2 tsp Peppermint Extract",
+        "Drop of Green Dye",
+        "Mix-in: Mini Choc Chips"
+      ],
+      "instructions": [
+        "Mix liquid ingredients and dye.",
+        "Freeze for 24 hours.",
+        "Process on 'Ice Cream' mode.",
+        "Add chips and 'Mix-In'."
+      ],
+      "tags": ["Fresh", "Classic"]
+    },
+    {
+      "id": "pistachio",
+      "title": "Pistachio Dream",
+      "program": "ice-cream",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/B08D57/5D4037?text=Pistachio+Dream",
+      "calories": 350,
+      "protein": "15g",
+      "fat": "12g",
+      "ingredients": [
+        "1 cup Half-and-Half",
+        "1/2 cup Whole Milk",
+        "2 tbsp Pistachio Paste",
+        "1/4 cup Sugar"
+      ],
+      "instructions": [
+        "Blend all ingredients until smooth.",
+        "Freeze for 24 hours.",
+        "Process on 'Ice Cream' mode."
+      ],
+      "tags": ["Nutty", "Rich"]
+    },
+    {
+      "id": "brownie-batter",
+      "title": "Chocolate Brownie Batter",
+      "program": "ice-cream",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/3E2723/ffffff?text=Brownie+Batter",
+      "calories": 420,
+      "protein": "20g",
+      "fat": "15g",
+      "ingredients": [
+        "1.5 cups Whole Milk",
+        "1/4 cup Sugar",
+        "2 tbsp Cocoa Powder",
+        "1 tsp Vanilla Extract"
+      ],
+      "instructions": [
+        "Whisk all ingredients together.",
+        "Freeze for 24 hours.",
+        "Process on 'Ice Cream' mode."
+      ],
+      "tags": ["Indulgent", "Chocolate"]
+    },
+    {
+      "id": "strawberry-cheesecake",
+      "title": "Strawberry Cheesecake",
+      "program": "gelato",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/FFC6D9/5D4037?text=Strawberry+Cheese",
+      "calories": 315,
+      "protein": "20g",
+      "fat": "6g",
+      "ingredients": [
+        "1.5 cups Fairlife Vanilla",
+        "1 tbsp SF Cheesecake Pudding",
+        "1/2 cup Frozen Strawberries",
+        "Mix-in: Graham Cracker"
+      ],
+      "instructions": [
+        "Blend milk, pudding, and strawberries.",
+        "Freeze for 24 hours.",
+        "Process on 'Gelato' mode.",
+        "Add graham crackers and 'Mix-In'."
+      ],
+      "tags": ["Fruity", "Dense"]
+    },
+    {
+      "id": "blueberry-limon",
+      "title": "Blueberry Limoncello",
+      "program": "gelato",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/6A5ACD/FFF?text=Blueberry+Limon",
+      "calories": 280,
+      "protein": "5g",
+      "fat": "2g",
+      "ingredients": [
+        "1.5 cups Almond Milk",
+        "1/2 cup Frozen Blueberries",
+        "2 tbsp Lemon Juice",
+        "1/4 tsp Xanthan Gum"
+      ],
+      "instructions": [
+        "Blend all ingredients.",
+        "Freeze for 24 hours.",
+        "Process on 'Gelato' mode."
+      ],
+      "tags": ["Vegan Option", "Fruity"]
+    },
+    {
+      "id": "dole-whip",
+      "title": "The \"Dole Whip\" Dupe",
+      "program": "sorbet",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/FFF5BA/5D4037?text=Dole+Whip+Dupe",
+      "calories": 250,
+      "protein": "0g",
+      "fat": "0g",
+      "ingredients": [
+        "1 Can (15oz) Pineapple Chunks",
+        "Use 100% Juice (Don't drain)",
+        "Mash slightly before freezing"
+      ],
+      "instructions": [
+        "Pour pineapple and juice into pint.",
+        "Mash chunks down to fit.",
+        "Freeze for 24 hours.",
+        "Process on 'Sorbet' mode."
+      ],
+      "tags": ["Vegan", "Fruit"]
+    },
+    {
+      "id": "mango-sorbet",
+      "title": "Tropical Mango Sorbet",
+      "program": "sorbet",
+      "mode": "scoop",
+      "image": "https://placehold.co/600x400/FF8C00/ffffff?text=Tropical+Mango",
+      "calories": 200,
+      "protein": "1g",
+      "fat": "0g",
+      "ingredients": [
+        "1.5 cups Frozen Mango Chunks",
+        "1/2 cup Coconut Water",
+        "1 tbsp Agave Nectar",
+        "1/2 Lime (Juice)"
+      ],
+      "instructions": [
+        "Blend mango and liquids slightly if needed to fit.",
+        "Freeze for 24 hours.",
+        "Process on 'Sorbet' mode."
+      ],
+      "tags": ["Vegan", "Refreshing"]
+    },
+    {
+      "id": "creamifit-choc",
+      "title": "CreamiFit Chocolate",
+      "program": "creamifit",
+      "mode": "soft-serve",
+      "image": "https://placehold.co/600x400/5D4037/FFF?text=Choco+Fit",
+      "calories": 220,
+      "protein": "32g",
+      "fat": "4g",
+      "ingredients": [
+        "1.5 cups Choc Protein Shake",
+        "1 tbsp SF Choc Pudding",
+        "1/4 tsp Xanthan Gum (Vital!)"
+      ],
+      "instructions": [
+        "Mix all ingredients.",
+        "Freeze for 24 hours.",
+        "Process on 'CreamiFit' mode."
+      ],
+      "tags": ["High Protein", "Fitness"]
+    },
+    {
+      "id": "pb-swirl",
+      "title": "Peanut Butter Swirl",
+      "program": "creamifit",
+      "mode": "soft-serve",
+      "image": "https://placehold.co/600x400/DEB887/5D4037?text=PB+Swirl",
+      "calories": 280,
+      "protein": "28g",
+      "fat": "6g",
+      "ingredients": [
+        "1.5 cups Fairlife Vanilla",
+        "2 tbsp PB2 Powder",
+        "1 tbsp SF Vanilla Pudding",
+        "Sweetener to taste"
+      ],
+      "instructions": [
+        "Whisk ingredients together.",
+        "Freeze for 24 hours.",
+        "Process on 'CreamiFit' mode."
+      ],
+      "tags": ["High Protein", "Nutty"]
+    },
+    {
+      "id": "key-lime",
+      "title": "Key Lime Pie Swirl",
+      "program": "creamifit",
+      "mode": "soft-serve",
+      "image": "https://placehold.co/600x400/E6E6FA/5D4037?text=Key+Lime",
+      "calories": 260,
+      "protein": "25g",
+      "fat": "3g",
+      "ingredients": [
+        "1.5 cups Vanilla Protein Shake",
+        "1 tsp Lime Zest",
+        "2 tbsp Lime Juice",
+        "1 tbsp SF Cheesecake Pudding"
+      ],
+      "instructions": [
+        "Mix all ingredients.",
+        "Freeze for 24 hours.",
+        "Process on 'CreamiFit' mode."
+      ],
+      "tags": ["High Protein", "Tart"]
+    },
+    {
+      "id": "cake-batter-froyo",
+      "title": "Cake Batter Froyo",
+      "program": "frozen-yogurt",
+      "mode": "soft-serve",
+      "image": "https://placehold.co/600x400/FFEFD5/5D4037?text=Cake+Batter+Yo",
+      "calories": 320,
+      "protein": "35g",
+      "fat": "3g",
+      "ingredients": [
+        "1 cup Vanilla Greek Yogurt",
+        "1/2 cup Fairlife Milk",
+        "1 tbsp Cake Batter Protein",
+        "1 tbsp Honey"
+      ],
+      "instructions": [
+        "Mix yogurt, milk, and protein powder.",
+        "Freeze for 24 hours.",
+        "Process on 'Frozen Yogurt' mode."
+      ],
+      "tags": ["Probiotic", "Sweet"]
+    },
+    {
+      "id": "signature-soft-serve",
+      "title": "Signature Soft Serve",
+      "program": "frozen-custard",
+      "mode": "soft-serve",
+      "image": "https://placehold.co/600x400/ffffff/5D4037?text=Signature+Vanilla",
+      "calories": 650,
+      "protein": "8g",
+      "fat": "40g",
+      "ingredients": [
+        "1 cup Whole Milk",
+        "1/2 cup Heavy Cream",
+        "2 tbsp Non-Fat Milk Powder",
+        "1/4 cup Sugar"
+      ],
+      "instructions": [
+        "Whisk all ingredients until sugar dissolves.",
+        "Freeze for 24 hours.",
+        "Process on 'Frozen Custard' mode."
+      ],
+      "tags": ["Indulgent", "Rich"]
+    }
+  ]
+}
