@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, ShoppingCart, ClipboardList, Settings } from 'lucide-react';
+import { X, ShoppingCart, ClipboardList, Settings, Camera } from 'lucide-react';
 
 export default function RecipeModal({
     recipe,
@@ -82,8 +82,9 @@ export default function RecipeModal({
                             </div>
                             {/* Image Upload */}
                             <div className="mt-4 text-center">
-                                <label className="inline-block bg-white/80 hover:bg-white text-gray-700 font-medium py-2 px-4 rounded cursor-pointer">
-                                    Upload Image
+                                <label className="inline-flex items-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold py-2 px-6 rounded-full cursor-pointer transition-colors border-2 border-pink-200 hover:border-pink-300">
+                                    <Camera className="w-5 h-5" />
+                                    <span>Upload Photo</span>
                                     <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
                                 </label>
                             </div>

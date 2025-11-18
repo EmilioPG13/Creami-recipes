@@ -57,6 +57,12 @@ function App() {
         }
     };
 
+    const updateRecipeImage = (id, dataUrl) => {
+        setRecipes(prev =>
+            prev.map(r => (r.id === id ? { ...r, image: dataUrl } : r))
+        );
+    };
+
     const renderView = () => {
         switch (currentView) {
             case 'home':
@@ -123,6 +129,7 @@ function App() {
                     recipe={selectedRecipe}
                     onClose={() => setSelectedRecipe(null)}
                     onAddToShoppingList={addToShoppingList}
+                    onUpdateImage={updateRecipeImage}
                 />
             )}
         </div>
