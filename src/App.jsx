@@ -94,6 +94,7 @@ function App() {
                             { id: 'frozen-yogurt', label: 'Frozen Yogurt', color: 'pink' },
                             { id: 'creamifit', label: 'CreamiFit', color: 'green' },
                             { id: 'frozen-custard', label: 'Frozen Custard', color: 'yellow' },
+                            { id: 'fruit-whip', label: 'Fruit Whip', color: 'purple' },
                         ]}
                         currentSubView={currentSubView}
                         setSubView={setCurrentSubView}
