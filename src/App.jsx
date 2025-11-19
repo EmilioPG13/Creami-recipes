@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -42,7 +43,13 @@ function App() {
             recipe: recipe.title
         }));
         setShoppingList(prev => [...prev, ...newItems]);
-        alert(`Added ingredients for ${recipe.title} to your list!`);
+        toast.success(`Added ingredients for ${recipe.title} to your list!`, {
+            style: {
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+        });
     };
 
     const toggleShoppingItem = (index) => {
@@ -52,9 +59,37 @@ function App() {
     };
 
     const clearShoppingList = () => {
-        if (confirm('Are you sure you want to clear your shopping list?')) {
-            setShoppingList([]);
-        }
+        toast((t) => (
+            <div className="flex flex-col gap-2">
+                <span className="font-medium">Clear your shopping list?</span>
+                <div className="flex gap-2 mt-1">
+                    <button
+                        onClick={() => {
+                            setShoppingList([]);
+                            toast.dismiss(t.id);
+                            toast.success('List cleared!');
+                        }}
+                        className="bg-red-500 text-white px-3 py-1 rounded-md text-sm font-bold hover:bg-red-600 transition-colors"
+                    >
+                        Yes, Clear
+                    </button>
+                    <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="bg-gray-200 text-gray-800 px-3 py-1 rounded-md text-sm font-bold hover:bg-gray-300 transition-colors"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        ), {
+            duration: 5000,
+            style: {
+                borderRadius: '12px',
+                background: '#fff',
+                color: '#333',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            },
+        });
     };
 
     const updateRecipeImage = (id, dataUrl) => {
@@ -117,6 +152,7 @@ function App() {
 
     return (
         <div className="min-h-screen flex flex-col bg-creami-gray text-creami-dark font-sans antialiased">
+            <Toaster position="bottom-center" reverseOrder={false} />
             <Header currentView={currentView} navigate={navigate} />
 
             <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
