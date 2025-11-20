@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Plus } from 'lucide-react';
+import SearchBar from './SearchBar';
 
-export default function Header({ currentView, navigate }) {
+export default function Header({ currentView, navigate, onAddRecipeClick, onSearchResult }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const navItems = [
@@ -19,7 +20,7 @@ export default function Header({ currentView, navigate }) {
     return (
         <header className="bg-white shadow-sm sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-16">
+                <div className="flex justify-between items-center h-16 gap-4">
                     {/* Logo */}
                     <div
                         className="flex-shrink-0 flex items-center cursor-pointer"
@@ -43,6 +44,20 @@ export default function Header({ currentView, navigate }) {
                         ))}
                     </nav>
 
+                    {/* Search Bar (Desktop) */}
+                    <div className="hidden lg:block flex-1 max-w-md">
+                        <SearchBar onResultClick={onSearchResult} />
+                    </div>
+
+                    {/* Add Recipe Button (Desktop) */}
+                    <button
+                        onClick={onAddRecipeClick}
+                        className="hidden md:flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold px-4 py-2 rounded-full transition-colors"
+                    >
+                        <Plus className="w-5 h-5" />
+                        <span>Add Recipe</span>
+                    </button>
+
                     {/* Mobile Menu Button */}
                     <div className="flex items-center md:hidden">
                         <button
@@ -52,6 +67,11 @@ export default function Header({ currentView, navigate }) {
                             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                         </button>
                     </div>
+                </div>
+
+                {/* Mobile Search (below header on mobile) */}
+                <div className="lg:hidden pb-3">
+                    <SearchBar onResultClick={onSearchResult} />
                 </div>
             </div>
 
@@ -68,6 +88,16 @@ export default function Header({ currentView, navigate }) {
                                 {item.label}
                             </button>
                         ))}
+                        <button
+                            onClick={() => {
+                                onAddRecipeClick();
+                                setIsMobileMenuOpen(false);
+                            }}
+                            className="w-full flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold px-4 py-2 rounded-full transition-colors mt-2"
+                        >
+                            <Plus className="w-5 h-5" />
+                            <span>Add Recipe</span>
+                        </button>
                     </div>
                 </div>
             )}
