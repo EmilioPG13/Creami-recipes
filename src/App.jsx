@@ -6,6 +6,8 @@ import Home from './components/Home';
 import CategoryView from './components/CategoryView';
 import ShoppingList from './components/ShoppingList';
 import RecipeModal from './components/RecipeModal';
+import AddRecipeModal from './components/AddRecipeModal';
+import { fetchRecipes, addRecipe } from './utils/api';
 
 function App() {
     const [recipes, setRecipes] = useState([]);
@@ -16,12 +18,29 @@ function App() {
         return saved ? JSON.parse(saved) : [];
     });
     const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [isAddRecipeOpen, setIsAddRecipeOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        fetch('/recipes.json')
-            .then(res => res.json())
-            .then(data => setRecipes(data.recipes))
-            .catch(err => console.error('Error loading recipes:', err));
+        async function loadRecipes() {
+            try {
+                const data = await fetchRecipes();
+                setRecipes(data);
+            } catch (error) {
+                console.error('Error loading recipes:', error);
+                // Fallback to local JSON if API fails
+                try {
+                    const response = await fetch('/recipes.json');
+                    const data = await response.json();
+                    setRecipes(data.recipes);
+                } catch (fallbackError) {
+                    console.error('Fallback also failed:', fallbackError);
+                }
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        loadRecipes();
     }, []);
 
     useEffect(() => {
@@ -98,6 +117,27 @@ function App() {
         );
     };
 
+    const handleAddRecipe = async (recipeData) => {
+        try {
+            const newRecipe = await addRecipe(recipeData);
+            setRecipes(prev => [...prev, newRecipe]);
+            toast.success(`${recipeData.title} added successfully!`, {
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                },
+            });
+        } catch (error) {
+            console.error('Failed to add recipe:', error);
+            throw error;
+        }
+    };
+
+    const handleSearchResult = (recipe) => {
+        setSelectedRecipe(recipe);
+    };
+
     const renderView = () => {
         switch (currentView) {
             case 'home':
@@ -153,10 +193,21 @@ function App() {
     return (
         <div className="min-h-screen flex flex-col bg-creami-gray text-creami-dark font-sans antialiased">
             <Toaster position="bottom-center" reverseOrder={false} />
-            <Header currentView={currentView} navigate={navigate} />
+            <Header
+                currentView={currentView}
+                navigate={navigate}
+                onAddRecipeClick={() => setIsAddRecipeOpen(true)}
+                onSearchResult={handleSearchResult}
+            />
 
             <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-                {renderView()}
+                {isLoading ? (
+                    <div className="text-center py-12">
+                        <p className="text-gray-500">Loading recipes...</p>
+                    </div>
+                ) : (
+                    renderView()
+                )}
             </main>
 
             <Footer />
@@ -167,6 +218,13 @@ function App() {
                     onClose={() => setSelectedRecipe(null)}
                     onAddToShoppingList={addToShoppingList}
                     onUpdateImage={updateRecipeImage}
+                />
+            )}
+
+            {isAddRecipeOpen && (
+                <AddRecipeModal
+                    onClose={() => setIsAddRecipeOpen(false)}
+                    onSave={handleAddRecipe}
                 />
             )}
         </div>

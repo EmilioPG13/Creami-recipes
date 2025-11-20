@@ -7,10 +7,14 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postgrest": "postgrest postgrest.conf",
+    "dev:all": "concurrently \"npm run dev\" \"npm run postgrest\"",
+    "migrate": "node migrations/002_seed_data.js"
   },
   "dependencies": {
     "lucide-react": "^0.554.0",
+    "pg": "^8.11.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hot-toast": "^2.6.0"
@@ -21,6 +25,7 @@
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
     "autoprefixer": "^10.4.22",
+    "concurrently": "^8.2.2",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
