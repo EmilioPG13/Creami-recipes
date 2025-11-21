@@ -8,9 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "postgrest": "postgrest.exe postgrest.conf",
+    "postgrest": "dotenv -e .env -- postgrest.exe postgrest.conf",
     "dev:all": "concurrently \"npm run dev\" \"npm run postgrest\"",
-    "migrate": "node migrations/002_seed_data.js"
+    "migrate": "dotenv -e .env -- node migrations/002_seed_data.js"
   },
   "dependencies": {
     "lucide-react": "^0.554.0",
@@ -26,6 +26,7 @@
     "@vitejs/plugin-react": "^5.1.0",
     "autoprefixer": "^10.4.22",
     "concurrently": "^8.2.2",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
