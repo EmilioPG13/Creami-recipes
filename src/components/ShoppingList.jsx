@@ -3,7 +3,7 @@ import { Trash2 } from 'lucide-react';
 
 export default function ShoppingList({ items, onToggle, onClear, navigate }) {
     return (
-        <div className="max-w-2xl mx-auto fade-in">
+        <div className="max-w-2xl mx-auto animate-fade-in">
             <div className="text-center mb-8">
                 <h2 className="font-heading text-3xl font-bold text-creami-dark mb-2">Shopping List</h2>
                 <p className="text-gray-500">Get everything you need for your next spin.</p>

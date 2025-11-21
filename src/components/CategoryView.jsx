@@ -13,7 +13,7 @@ export default function CategoryView({
     const filteredRecipes = recipes.filter(r => r.program === currentSubView);
 
     return (
-        <div className="fade-in">
+        <div className="animate-fade-in">
             <div className="text-center mb-10">
                 <h2 className="font-heading text-3xl font-bold text-creami-dark mb-2">{title}</h2>
                 <p className="text-gray-500">{subtitle}</p>
@@ -26,8 +26,8 @@ export default function CategoryView({
                         key={item.id}
                         onClick={() => setSubView(item.id)}
                         className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${currentSubView === item.id
-                                ? `bg-${item.color}-100 text-${item.color}-600 ring-2 ring-${item.color}-400`
-                                : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-200'
+                            ? `bg-${item.color}-100 text-${item.color}-600 ring-2 ring-${item.color}-400`
+                            : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-200'
                             }`}
                     >
                         {item.label}

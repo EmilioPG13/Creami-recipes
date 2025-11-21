@@ -5,7 +5,7 @@ export default function Home({ recipes, navigate, onRecipeClick }) {
     const latestRecipes = recipes.slice(0, 3);
 
     return (
-        <div className="text-center py-12 fade-in">
+        <div className="text-center py-12 animate-fade-in">
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-creami-dark mb-4">
                 Welcome to the <span className="text-pink-400">Swirl Station</span>
             </h1>

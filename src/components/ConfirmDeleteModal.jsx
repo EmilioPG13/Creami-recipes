@@ -47,48 +47,7 @@ export default function ConfirmDeleteModal({ recipeName, onConfirm, onCancel }) 
                 </div>
             </div>
 
-            <style jsx>{`
-                @keyframes fade-in {
-                    from {
-                        opacity: 0;
-                    }
-                    to {
-                        opacity: 1;
-                    }
-                }
 
-                @keyframes scale-in {
-                    from {
-                        transform: scale(0.9);
-                        opacity: 0;
-                    }
-                    to {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
-                }
-
-                @keyframes bounce-once {
-                    0%, 100% {
-                        transform: translateY(0);
-                    }
-                    50% {
-                        transform: translateY(-10px);
-                    }
-                }
-
-                .animate-fade-in {
-                    animation: fade-in 0.2s ease-out;
-                }
-
-                .animate-scale-in {
-                    animation: scale-in 0.3s ease-out;
-                }
-
-                .animate-bounce-once {
-                    animation: bounce-once 0.6s ease-in-out;
-                }
-            `}</style>
         </div>
     );
 }
