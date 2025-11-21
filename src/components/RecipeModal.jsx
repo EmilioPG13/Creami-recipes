@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { X, ShoppingCart, ClipboardList, Settings, Camera } from 'lucide-react';
+import { X, ShoppingCart, ClipboardList, Settings, Camera, Trash2 } from 'lucide-react';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 export default function RecipeModal({
     recipe,
     onClose,
     onAddToShoppingList,
     onUpdateImage,
+    onDelete,
 }) {
     const [preview, setPreview] = useState(recipe?.image || '');
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -28,6 +31,14 @@ export default function RecipeModal({
             document.body.style.overflow = '';
         };
     }, []);
+
+    const handleDelete = () => {
+        setShowDeleteConfirm(false);
+        if (onDelete) {
+            onDelete(recipe.id);
+        }
+        onClose();
+    };
 
     if (!recipe) return null;
 
@@ -52,12 +63,22 @@ export default function RecipeModal({
                 <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
                     <div className="relative">
                         {/* Close Button */}
-                        <button
-                            onClick={onClose}
-                            className="absolute top-4 right-4 z-10 bg-white/80 hover:bg-white p-2 rounded-full text-gray-500 hover:text-gray-800 transition-colors backdrop-blur-sm"
-                        >
-                            <X className="w-6 h-6" />
-                        </button>
+                        {/* Action Buttons */}
+                        <div className="absolute top-4 right-4 z-10 flex gap-2">
+                            <button
+                                onClick={() => setShowDeleteConfirm(true)}
+                                className="bg-red-500/80 hover:bg-red-600 p-2 rounded-full text-white transition-all hover:scale-110 backdrop-blur-sm shadow-lg"
+                                title="Delete Recipe"
+                            >
+                                <Trash2 className="w-5 h-5" />
+                            </button>
+                            <button
+                                onClick={onClose}
+                                className="bg-white/80 hover:bg-white p-2 rounded-full text-gray-500 hover:text-gray-800 transition-colors backdrop-blur-sm"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+                        </div>
                         <div className="p-6 sm:p-8">
                             {/* Hero Image */}
                             <div className="h-64 sm:h-80 w-full relative">
@@ -150,6 +171,15 @@ export default function RecipeModal({
                     </div>
                 </div>
             </div>
+
+            {/* Delete Confirmation Modal */}
+            {showDeleteConfirm && (
+                <ConfirmDeleteModal
+                    recipeName={recipe.title}
+                    onConfirm={handleDelete}
+                    onCancel={() => setShowDeleteConfirm(false)}
+                />
+            )}
         </div>
     );
 }

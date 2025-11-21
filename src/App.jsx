@@ -7,7 +7,7 @@ import CategoryView from './components/CategoryView';
 import ShoppingList from './components/ShoppingList';
 import RecipeModal from './components/RecipeModal';
 import AddRecipeModal from './components/AddRecipeModal';
-import { fetchRecipes, addRecipe } from './utils/api';
+import { fetchRecipes, addRecipe, deleteRecipe } from './utils/api';
 
 function App() {
     const [recipes, setRecipes] = useState([]);
@@ -138,6 +138,38 @@ function App() {
         setSelectedRecipe(recipe);
     };
 
+    const handleDeleteRecipe = async (recipeId) => {
+        try {
+            await deleteRecipe(recipeId);
+            setRecipes(prevRecipes => prevRecipes.filter(r => r.id !== recipeId));
+            toast.success(
+                'Recipe deleted successfully',
+                {
+                    duration: 3000,
+                    icon: '\ud83d\uddd1\ufe0f',
+                    style: {
+                        borderRadius: '10px',
+                        background: '#6366f1',
+                        color: '#fff',
+                    },
+                }
+            );
+        } catch (error) {
+            console.error('Error deleting recipe:', error);
+            toast.error(
+                'Failed to delete recipe. Please try again.',
+                {
+                    duration: 3000,
+                    style: {
+                        borderRadius: '10px',
+                        background: '#ef4444',
+                        color: '#fff',
+                    },
+                }
+            );
+        }
+    };
+
     const renderView = () => {
         switch (currentView) {
             case 'home':
@@ -218,6 +250,7 @@ function App() {
                     onClose={() => setSelectedRecipe(null)}
                     onAddToShoppingList={addToShoppingList}
                     onUpdateImage={updateRecipeImage}
+                    onDelete={handleDeleteRecipe}
                 />
             )}
 
