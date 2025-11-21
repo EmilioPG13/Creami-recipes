@@ -25,9 +25,9 @@ export default function RecipeCard({ recipe, onClick }) {
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-4">
-                    {recipe.tags.slice(0, 2).map((tag, index) => (
-                        <span key={index} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md font-medium">
-                            {tag}
+                    {(recipe.tags || [recipe.program, recipe.mode].filter(Boolean)).slice(0, 2).map((tag, index) => (
+                        <span key={index} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md font-medium capitalize">
+                            {tag.replace(/-/g, ' ')}
                         </span>
                     ))}
                 </div>
