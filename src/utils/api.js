@@ -108,6 +108,7 @@ export async function addRecipe(recipeData) {
             });
         }
 
+
         // Return the created recipe with full details
         return {
             ...recipe[0],
@@ -115,7 +116,7 @@ export async function addRecipe(recipeData) {
             instructions
         };
     } catch (error) {
-        console.error('Error adding recipe:', error);
+        console.error('Failed to add recipe:', error);
         throw error;
     }
 }
@@ -127,4 +128,29 @@ export async function addRecipe(recipeData) {
  */
 export async function searchRecipes(query) {
     return fetchRecipes(query);
+}
+
+/**
+ * Delete a recipe by ID
+ * @param {number} id - Recipe ID to delete
+ * @returns {Promise<void>}
+ */
+export async function deleteRecipe(id) {
+    try {
+        const response = await fetch(`/api/recipes?id=eq.${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete recipe');
+        }
+
+        return;
+    } catch (error) {
+        console.error('Failed to delete recipe:', error);
+        throw error;
+    }
 }

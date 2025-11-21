@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "postgrest": "postgrest postgrest.conf",
+    "postgrest": "postgrest.exe postgrest.conf",
     "dev:all": "concurrently \"npm run dev\" \"npm run postgrest\"",
     "migrate": "node migrations/002_seed_data.js"
   },
