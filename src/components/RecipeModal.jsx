@@ -63,22 +63,12 @@ export default function RecipeModal({
                 <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
                     <div className="relative">
                         {/* Close Button */}
-                        {/* Action Buttons */}
-                        <div className="absolute top-4 right-4 z-10 flex gap-2">
-                            <button
-                                onClick={() => setShowDeleteConfirm(true)}
-                                className="bg-red-500/80 hover:bg-red-600 p-2 rounded-full text-white transition-all hover:scale-110 backdrop-blur-sm shadow-lg"
-                                title="Delete Recipe"
-                            >
-                                <Trash2 className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={onClose}
-                                className="bg-white/80 hover:bg-white p-2 rounded-full text-gray-500 hover:text-gray-800 transition-colors backdrop-blur-sm"
-                            >
-                                <X className="w-6 h-6" />
-                            </button>
-                        </div>
+                        <button
+                            onClick={onClose}
+                            className="absolute top-4 right-4 z-10 bg-white/80 hover:bg-white p-2 rounded-full text-gray-500 hover:text-gray-800 transition-colors backdrop-blur-sm"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
                         <div className="p-6 sm:p-8">
                             {/* Hero Image */}
                             <div className="h-64 sm:h-80 w-full relative">
@@ -133,6 +123,15 @@ export default function RecipeModal({
                                     >
                                         <ShoppingCart className="w-5 h-5" />
                                         Add to Shopping List
+                                    </button>
+
+                                    {/* Delete Recipe Button */}
+                                    <button
+                                        onClick={() => setShowDeleteConfirm(true)}
+                                        className="mt-3 w-full bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2 px-4 rounded-xl transition-all flex items-center justify-center gap-2 border border-red-200 hover:border-red-300"
+                                    >
+                                        <Trash2 className="w-5 h-5" />
+                                        Delete Recipe
                                     </button>
                                 </div>
                                 {/* Instructions */}
