@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "postgrest": "dotenv -e .env -- postgrest.exe postgrest.conf",
     "dev:all": "concurrently \"npm run dev\" \"npm run postgrest\"",
-    "migrate": "dotenv -e .env -- node migrations/002_seed_data.js"
+    "migrate": "dotenv -e .env -- node migrations/002_seed_data.js",
+    "db:schema": "dotenv -e .env -- node migrations/apply_schema.js",
+    "db:setup": "npm run db:schema && npm run migrate"
   },
   "dependencies": {
     "lucide-react": "^0.554.0",

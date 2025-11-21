@@ -1,5 +1,5 @@
 -- Recipes table
-CREATE TABLE recipes (
+CREATE TABLE IF NOT EXISTS recipes (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     base_flavor TEXT,
@@ -23,7 +23,7 @@ CREATE TABLE recipes (
 );
 
 -- Ingredients table (separate for better search and normalization)
-CREATE TABLE ingredients (
+CREATE TABLE IF NOT EXISTS ingredients (
     id SERIAL PRIMARY KEY,
     recipe_id INTEGER NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
     ingredient_text TEXT NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE ingredients (
 );
 
 -- Instructions table
-CREATE TABLE instructions (
+CREATE TABLE IF NOT EXISTS instructions (
     id SERIAL PRIMARY KEY,
     recipe_id INTEGER NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
     instruction_text TEXT NOT NULL,
@@ -39,21 +39,37 @@ CREATE TABLE instructions (
 );
 
 -- Full-text search setup
-ALTER TABLE recipes ADD COLUMN ingredients_text TEXT;
-ALTER TABLE recipes ADD COLUMN search_vector tsvector
-    GENERATED ALWAYS AS (
-        to_tsvector('english', 
-            COALESCE(title, '') || ' ' || 
-            COALESCE(base_flavor, '') || ' ' || 
-            COALESCE(ingredients_text, '')
-        )
-    ) STORED;
+-- Check if column exists before adding (idempotent approach for columns is harder in pure SQL without PL/pgSQL, 
+-- but for this setup script we'll assume if table exists, columns exist or we ignore errors. 
+-- A better way for columns is DO block)
+
+DO $$ 
+BEGIN 
+    BEGIN
+        ALTER TABLE recipes ADD COLUMN ingredients_text TEXT;
+    EXCEPTION
+        WHEN duplicate_column THEN NULL;
+    END;
+    
+    BEGIN
+        ALTER TABLE recipes ADD COLUMN search_vector tsvector
+            GENERATED ALWAYS AS (
+                to_tsvector('english', 
+                    COALESCE(title, '') || ' ' || 
+                    COALESCE(base_flavor, '') || ' ' || 
+                    COALESCE(ingredients_text, '')
+                )
+            ) STORED;
+    EXCEPTION
+        WHEN duplicate_column THEN NULL;
+    END;
+END $$;
 
 -- Index for full-text search
-CREATE INDEX recipes_search_idx ON recipes USING GIN (search_vector);
+CREATE INDEX IF NOT EXISTS recipes_search_idx ON recipes USING GIN (search_vector);
 
 -- Create a view for easy querying (includes ingredients and instructions as JSON arrays)
-CREATE VIEW recipes_full AS
+CREATE OR REPLACE VIEW recipes_full AS
 SELECT 
     r.id,
     r.title,
@@ -64,21 +80,30 @@ SELECT
     r.protein,
     r.image,
     r.created_at,
-    COALESCE(
-        json_agg(DISTINCT i.ingredient_text ORDER BY i.order_index) FILTER (WHERE i.ingredient_text IS NOT NULL),
-        '[]'::json
+    (
+        SELECT COALESCE(json_agg(i.ingredient_text ORDER BY i.order_index), '[]'::json)
+        FROM ingredients i
+        WHERE i.recipe_id = r.id
     ) AS ingredients,
-    COALESCE(
-        json_agg(DISTINCT inst.instruction_text ORDER BY inst.step_number) FILTER (WHERE inst.instruction_text IS NOT NULL),
-        '[]'::json
+    (
+        SELECT COALESCE(json_agg(inst.instruction_text ORDER BY inst.step_number), '[]'::json)
+        FROM instructions inst
+        WHERE inst.recipe_id = r.id
     ) AS instructions
-FROM recipes r
-LEFT JOIN ingredients i ON r.id = i.recipe_id
-LEFT JOIN instructions inst ON r.id = inst.recipe_id
-GROUP BY r.id;
+FROM recipes r;
 
 -- Create web_anon role for PostgREST
-CREATE ROLE web_anon NOLOGIN;
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'web_anon') THEN
+    CREATE ROLE web_anon NOLOGIN;
+  END IF;
+END
+$$;
+
 GRANT USAGE ON SCHEMA public TO web_anon;
 GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO web_anon;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO web_anon;
+
+-- Allow the authenticator role (current user) to switch to web_anon
+GRANT web_anon TO CURRENT_USER;

@@ -22,17 +22,26 @@ async function migrate() {
         await client.connect();
         console.log('✅ Connected to database');
 
+        // Check if data already exists
+        const countResult = await client.query('SELECT COUNT(*) FROM recipes');
+        const count = parseInt(countResult.rows[0].count);
+
+        if (count > 0) {
+            console.log(`⚠️ Database already has ${count} recipes. Skipping seed.`);
+            return;
+        }
+
         // Read recipes.json
         const recipesPath = path.join(__dirname, '../public/recipes.json');
         const data = JSON.parse(fs.readFileSync(recipesPath, 'utf-8'));
-        
+
         console.log(`📦 Found ${data.recipes.length} recipes to migrate`);
 
         for (const recipe of data.recipes) {
             // Map old fields to new schema
             const scoop_mode = recipe.mode || 'both';
             const program = recipe.program;
-            
+
             // Insert recipe
             const recipeResult = await client.query(
                 `INSERT INTO recipes (title, base_flavor, scoop_mode, program, calories, protein, image, ingredients_text)
@@ -49,7 +58,7 @@ async function migrate() {
                     recipe.ingredients.join(' ')
                 ]
             );
-            
+
             const recipeId = recipeResult.rows[0].id;
             console.log(`  ✓ ${recipe.title} (ID: ${recipeId})`);
 
