@@ -73,7 +73,7 @@ export default function SearchBar({ onResultClick }) {
                 {query && (
                     <button
                         onClick={clearSearch}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -93,20 +93,25 @@ export default function SearchBar({ onResultClick }) {
                                 <li key={recipe.id}>
                                     <button
                                         onClick={() => handleResultClick(recipe)}
-                                        className="w-full p-3 hover:bg-gray-50 transition-colors text-left flex items-center gap-3"
+                                        className="w-full p-3 hover:bg-gray-50 transition-colors flex items-center justify-between gap-3"
                                     >
-                                        <img
-                                            src={recipe.image}
-                                            alt={recipe.title}
-                                            className="w-12 h-12 object-cover rounded-lg"
-                                        />
-                                        <div className="flex-1 min-w-0">
+                                        {/* Text Content - Left Side */}
+                                        <div className="flex-1 min-w-0 text-left">
                                             <p className="font-medium text-gray-900 truncate">
                                                 {recipe.title}
                                             </p>
                                             <p className="text-sm text-gray-500 capitalize">
                                                 {recipe.program.replace(/-/g, ' ')}
                                             </p>
+                                        </div>
+
+                                        {/* Image - Right Side */}
+                                        <div className="flex-shrink-0">
+                                            <img
+                                                src={recipe.image}
+                                                alt={recipe.title}
+                                                className="w-12 h-12 object-cover rounded-lg"
+                                            />
                                         </div>
                                     </button>
                                 </li>

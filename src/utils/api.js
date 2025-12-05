@@ -12,8 +12,8 @@ export async function fetchRecipes(searchQuery = null) {
         let url = `${API_BASE}/recipes_full`;
 
         if (searchQuery && searchQuery.trim()) {
-            // Full-text search using PostgREST
-            url += `?search_vector=fts.${encodeURIComponent(searchQuery)}`;
+            // Case-insensitive search using PostgREST ilike operator
+            url += `?or=(title.ilike.*${encodeURIComponent(searchQuery)}*,ingredients_text.ilike.*${encodeURIComponent(searchQuery)}*)`;
         }
 
         const response = await fetch(url);
