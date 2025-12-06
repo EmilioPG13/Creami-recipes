@@ -102,7 +102,7 @@ END
 $$;
 
 GRANT USAGE ON SCHEMA public TO web_anon;
-GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO web_anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO web_anon;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO web_anon;
 
 -- Allow the authenticator role (current user) to switch to web_anon

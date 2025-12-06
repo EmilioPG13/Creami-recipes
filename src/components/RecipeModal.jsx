@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { X, ShoppingCart, ClipboardList, Settings, Camera, Trash2 } from 'lucide-react';
+import PropTypes from 'prop-types';
+import { X, ShoppingCart, ClipboardList, Settings, Camera, Trash2, Pencil } from 'lucide-react';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import EditRecipeModal from './EditRecipeModal';
 
 export default function RecipeModal({
     recipe,
@@ -8,9 +10,11 @@ export default function RecipeModal({
     onAddToShoppingList,
     onUpdateImage,
     onDelete,
+    onEdit,
 }) {
     const [preview, setPreview] = useState(recipe?.image || '');
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -125,6 +129,15 @@ export default function RecipeModal({
                                         Add to Shopping List
                                     </button>
 
+                                    {/* Edit Recipe Button */}
+                                    <button
+                                        onClick={() => setShowEditModal(true)}
+                                        className="mt-3 w-full bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold py-2 px-4 rounded-xl transition-all flex items-center justify-center gap-2 border border-blue-200 hover:border-blue-300"
+                                    >
+                                        <Pencil className="w-5 h-5" />
+                                        Edit Recipe
+                                    </button>
+
                                     {/* Delete Recipe Button */}
                                     <button
                                         onClick={() => setShowDeleteConfirm(true)}
@@ -179,6 +192,37 @@ export default function RecipeModal({
                     onCancel={() => setShowDeleteConfirm(false)}
                 />
             )}
+
+            {/* Edit Recipe Modal */}
+            {showEditModal && (
+                <EditRecipeModal
+                    recipe={recipe}
+                    onClose={() => setShowEditModal(false)}
+                    onSave={(id, data) => {
+                        if (onEdit) onEdit(id, data);
+                        setShowEditModal(false);
+                    }}
+                />
+            )}
         </div>
     );
 }
+
+RecipeModal.propTypes = {
+    recipe: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        image: PropTypes.string,
+        calories: PropTypes.number,
+        protein: PropTypes.string,
+        mode: PropTypes.string,
+        program: PropTypes.string,
+        ingredients: PropTypes.arrayOf(PropTypes.string),
+        instructions: PropTypes.arrayOf(PropTypes.string),
+    }).isRequired,
+    onClose: PropTypes.func.isRequired,
+    onAddToShoppingList: PropTypes.func.isRequired,
+    onUpdateImage: PropTypes.func,
+    onDelete: PropTypes.func,
+    onEdit: PropTypes.func,
+};

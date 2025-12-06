@@ -7,7 +7,7 @@ import CategoryView from './components/CategoryView';
 import ShoppingList from './components/ShoppingList';
 import RecipeModal from './components/RecipeModal';
 import AddRecipeModal from './components/AddRecipeModal';
-import { fetchRecipes, addRecipe, deleteRecipe } from './utils/api';
+import { fetchRecipes, addRecipe, deleteRecipe, updateRecipe } from './utils/api';
 
 function App() {
     const [recipes, setRecipes] = useState([]);
@@ -170,6 +170,42 @@ function App() {
         }
     };
 
+    const handleEditRecipe = async (recipeId, recipeData) => {
+        try {
+            const updatedRecipe = await updateRecipe(recipeId, recipeData);
+            setRecipes(prevRecipes =>
+                prevRecipes.map(r => r.id === recipeId ? { ...r, ...updatedRecipe } : r)
+            );
+            // Update selected recipe to show changes immediately
+            setSelectedRecipe(prev => prev && prev.id === recipeId ? { ...prev, ...updatedRecipe } : prev);
+            toast.success(
+                'Recipe updated successfully!',
+                {
+                    duration: 3000,
+                    icon: '✏️',
+                    style: {
+                        borderRadius: '10px',
+                        background: '#3b82f6',
+                        color: '#fff',
+                    },
+                }
+            );
+        } catch (error) {
+            console.error('Error updating recipe:', error);
+            toast.error(
+                'Failed to update recipe. Please try again.',
+                {
+                    duration: 3000,
+                    style: {
+                        borderRadius: '10px',
+                        background: '#ef4444',
+                        color: '#fff',
+                    },
+                }
+            );
+        }
+    };
+
     const renderView = () => {
         switch (currentView) {
             case 'home':
@@ -251,6 +287,7 @@ function App() {
                     onAddToShoppingList={addToShoppingList}
                     onUpdateImage={updateRecipeImage}
                     onDelete={handleDeleteRecipe}
+                    onEdit={handleEditRecipe}
                 />
             )}
 

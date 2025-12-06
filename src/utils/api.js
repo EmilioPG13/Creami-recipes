@@ -154,3 +154,103 @@ export async function deleteRecipe(id) {
         throw error;
     }
 }
+
+/**
+ * Update an existing recipe
+ * @param {number} id - Recipe ID to update
+ * @param {Object} recipeData - Updated recipe data
+ * @returns {Promise<Object>} Updated recipe
+ */
+export async function updateRecipe(id, recipeData) {
+    try {
+        const {
+            title,
+            base_flavor,
+            scoop_mode,
+            program,
+            calories,
+            protein,
+            image,
+            ingredients,
+            instructions
+        } = recipeData;
+
+        // 1. Update the main recipe
+        const recipeResponse = await fetch(`${API_BASE}/recipes?id=eq.${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify({
+                title,
+                base_flavor,
+                scoop_mode,
+                program,
+                calories,
+                protein,
+                image,
+                ingredients_text: ingredients ? ingredients.join(' ') : undefined
+            })
+        });
+
+        if (!recipeResponse.ok) {
+            throw new Error(`Failed to update recipe: ${recipeResponse.statusText}`);
+        }
+
+        // 2. If ingredients provided, delete old and insert new
+        if (ingredients && ingredients.length > 0) {
+            // Delete existing ingredients
+            await fetch(`${API_BASE}/ingredients?recipe_id=eq.${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            // Insert new ingredients
+            const ingredientsData = ingredients.map((text, index) => ({
+                recipe_id: id,
+                ingredient_text: text,
+                order_index: index
+            }));
+
+            await fetch(`${API_BASE}/ingredients`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ingredientsData)
+            });
+        }
+
+        // 3. If instructions provided, delete old and insert new
+        if (instructions && instructions.length > 0) {
+            // Delete existing instructions
+            await fetch(`${API_BASE}/instructions?recipe_id=eq.${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            // Insert new instructions
+            const instructionsData = instructions.map((text, index) => ({
+                recipe_id: id,
+                instruction_text: text,
+                step_number: index + 1
+            }));
+
+            await fetch(`${API_BASE}/instructions`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(instructionsData)
+            });
+        }
+
+        // Return the updated recipe
+        const recipe = await recipeResponse.json();
+        return {
+            ...recipe[0],
+            ingredients: ingredients || [],
+            instructions: instructions || []
+        };
+    } catch (error) {
+        console.error('Failed to update recipe:', error);
+        throw error;
+    }
+}
