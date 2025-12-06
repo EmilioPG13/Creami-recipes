@@ -1,6 +1,26 @@
-// API utility functions for communicating with PostgREST
+// API utility functions for communicating with PostgREST / Supabase
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+
+/**
+ * Get headers for API requests
+ * Supabase requires apikey header for authentication
+ */
+function getHeaders(additionalHeaders = {}) {
+    const headers = {
+        'Content-Type': 'application/json',
+        ...additionalHeaders
+    };
+
+    // Add Supabase API key if available (production)
+    if (API_KEY) {
+        headers['apikey'] = API_KEY;
+        headers['Authorization'] = `Bearer ${API_KEY}`;
+    }
+
+    return headers;
+}
 
 /**
  * Fetch all recipes or search by query
@@ -16,7 +36,9 @@ export async function fetchRecipes(searchQuery = null) {
             url += `?or=(title.ilike.*${encodeURIComponent(searchQuery)}*,ingredients_text.ilike.*${encodeURIComponent(searchQuery)}*)`;
         }
 
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: getHeaders()
+        });
         if (!response.ok) {
             throw new Error(`Failed to fetch recipes: ${response.statusText}`);
         }
@@ -51,10 +73,7 @@ export async function addRecipe(recipeData) {
         // 1. Insert recipe
         const recipeResponse = await fetch(`${API_BASE}/recipes`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Prefer': 'return=representation'
-            },
+            headers: getHeaders({ 'Prefer': 'return=representation' }),
             body: JSON.stringify({
                 title,
                 base_flavor,
@@ -84,9 +103,7 @@ export async function addRecipe(recipeData) {
 
             await fetch(`${API_BASE}/ingredients`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: getHeaders(),
                 body: JSON.stringify(ingredientsData)
             });
         }
@@ -101,9 +118,7 @@ export async function addRecipe(recipeData) {
 
             await fetch(`${API_BASE}/instructions`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: getHeaders(),
                 body: JSON.stringify(instructionsData)
             });
         }
@@ -137,11 +152,9 @@ export async function searchRecipes(query) {
  */
 export async function deleteRecipe(id) {
     try {
-        const response = await fetch(`/api/recipes?id=eq.${id}`, {
+        const response = await fetch(`${API_BASE}/recipes?id=eq.${id}`, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: getHeaders(),
         });
 
         if (!response.ok) {
@@ -178,10 +191,7 @@ export async function updateRecipe(id, recipeData) {
         // 1. Update the main recipe
         const recipeResponse = await fetch(`${API_BASE}/recipes?id=eq.${id}`, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Prefer': 'return=representation'
-            },
+            headers: getHeaders({ 'Prefer': 'return=representation' }),
             body: JSON.stringify({
                 title,
                 base_flavor,
@@ -203,7 +213,7 @@ export async function updateRecipe(id, recipeData) {
             // Delete existing ingredients
             await fetch(`${API_BASE}/ingredients?recipe_id=eq.${id}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
+                headers: getHeaders()
             });
 
             // Insert new ingredients
@@ -215,7 +225,7 @@ export async function updateRecipe(id, recipeData) {
 
             await fetch(`${API_BASE}/ingredients`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getHeaders(),
                 body: JSON.stringify(ingredientsData)
             });
         }
@@ -225,7 +235,7 @@ export async function updateRecipe(id, recipeData) {
             // Delete existing instructions
             await fetch(`${API_BASE}/instructions?recipe_id=eq.${id}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
+                headers: getHeaders()
             });
 
             // Insert new instructions
@@ -237,7 +247,7 @@ export async function updateRecipe(id, recipeData) {
 
             await fetch(`${API_BASE}/instructions`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getHeaders(),
                 body: JSON.stringify(instructionsData)
             });
         }
