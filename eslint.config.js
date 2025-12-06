@@ -26,4 +26,12 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  // Node.js config for migration scripts
+  {
+    files: ['migrations/**/*.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 ])
+
