@@ -39,7 +39,7 @@ export default function Home({ recipes, navigate, onRecipeClick }) {
                 <div className="relative z-10 max-w-4xl mx-auto px-4">
                     <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-creami-pink-200 rounded-full px-4 py-2 mb-6 shadow-sm">
                         <Sparkles className="w-4 h-4 text-creami-pink-500" />
-                        <span className="text-sm font-medium text-creami-dark">Ninja Creami NC701 Recipes</span>
+                        <span className="text-sm font-medium text-creami-dark">Ninja Creami & Swirl Recipes</span>
                     </div>
 
                     <h1 className="font-heading text-5xl md:text-7xl font-bold text-creami-dark mb-6 text-shadow-soft">

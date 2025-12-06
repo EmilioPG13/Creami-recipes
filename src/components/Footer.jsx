@@ -35,7 +35,7 @@ export default function Footer() {
                             From creamy gelatos to refreshing sorbets — discover endless frozen treat possibilities.
                         </p>
                         <p className="text-sm text-gray-400 flex items-center gap-1">
-                            Made with <Heart className="w-4 h-4 text-pink-400 fill-pink-400" /> for the Ninja Creami NC701
+                            Made with <Heart className="w-4 h-4 text-pink-400 fill-pink-400" /> for the Ninja Creami & Swirl
                         </p>
                     </div>
 
