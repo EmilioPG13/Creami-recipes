@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npx vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "npx vite preview",
     "postgrest": "dotenv -e .env -- postgrest.exe postgrest.conf",
     "dev:all": "concurrently \"npm run dev\" \"npm run postgrest\"",
     "migrate": "dotenv -e .env -- node migrations/002_seed_data.js",
